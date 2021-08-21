@@ -6,7 +6,7 @@
 #define GET_ROBOT_VERSION_LEN		2
 #define GET_ROBOT_VERSION_RETURN_LEN	3
 
-#define GET_SYSTEM_VERSION			0X27
+#define GET_SYSTEM_VERSION			0X02
 #define GET_SYSTEM_VERSION_LEN		2
 #define GET_SYSTEM_VERSION_RETURN_LEN	3
 
@@ -78,7 +78,7 @@
 #define TASK_STOP_LEN				2
 
 #define IS_IN_POSITION				0x2A
-#define IS_IN_POSITION_LEN			15
+#define IS_IN_POSITION_LEN			14
 #define IS_IN_POSITION_RETURN_LEN	3
 
 #define CHECK_RUNNING				0x2B
@@ -111,11 +111,6 @@
 
 #define SET_ENCODERS				0x3C
 #define SET_ENCODERS_LEN			15
-
-#define GET_ENCODERS                 0x3D
-#define GET_ENCODERS_LEN             2
-#define GET_ENCODES_RETURN_LEN       14
-
 
 
 // Running Status and Settings
@@ -177,100 +172,35 @@
 #define VOID_JOINT_BRAKE			0x55
 #define VOID_JOINT_BRAKE_LEN		3
 
-#define RELEASE_SERVO				0x56
-#define RELEASE_SERVO_LEN			3
-
-#define FOCUS_SERVO					0x57
-#define FOCUS_SERVO_LEN				3
-
-
+//
 //// ATOM IO
 #define	SET_PIN_MODE				0x60
 #define	SET_PIN_MODE_LEN			4
 //
-#define	SET_DIGITAL_OUTPUT			0x61
-#define	SET_DIGITAL_OUTPUT_LEN		4
+#define	SET_PIN_DATA				0x61
 					
 //
-#define	GET_DIGITAL_INPUT				0x62
-#define	GET_DIGITAL_INPUT_LEN			3					
-#define GET_DIGITAL_INPUT_RETURN_LEN	3
+#define	GET_PIN_INPUT				0x62
+#define	GET_PIN_INPUT_LEN			3					
+#define GET_PIN_INPUT_RETURN_LEN	3
 //
-#define	SET_PWM_MODE					0x63
-#define	SET_PWM_MODE_LEN				6
+//#define								0x63
+//#define								
 //
-#define	SET_PWM_OUTPUT					0x64
-#define	SET_PWM_OUTPUT_LEN				6
-
-//
-#define	GET_GRIPPER_VALUE				0x65
-#define	GET_GRIPPER_VALUE_LEN			2
-#define GET_GRIPPER_VALUE_RETURN_LEN	4
+//#define								0x65
+//#define								2
 //
 #define	SET_GRIPPER_STATE				0x66
-#define	SET_GRIPPER_STATE_LEN			4
+#define	SET_GRIPPER_STATE_LEN			3
 //
-#define	SET_GRIPPER_VALUE				0x67
-#define	SET_GRIPPER_VALUE_LEN			5
-
-#define	SET_GRIPPER_INI					0x68
-#define	SET_GRIPPER_INI_LEN				2
-
-#define	IS_GRIPPER_MOVING				0x69
-#define	IS_GRIPPER_MOVING_LEN			2
-#define IS_GRIPPER_MOVING_RETURN_LEN	3
+//#define								0x67
+//#define								2
 //
-#define	SET_LED							0x6A
-#define	SET_LED_LEN						5
+#define	SET_LED						0x6A
+#define	SET_LED_LEN					5
 //
 //// Base basic and IO control
 //#define								0x70
 //#define								
-
-#define ROBOTIC_MESSAGE				0x80
-#define ROBOTIC_MESSAGE_LEN			2
-#define ROBOTIC_MESSAGE_RETURN_LEN	3
-
-#define SET_TOOL_REF				0x81
-#define SET_TOOL_REF_LEN			14
-
-#define GET_TOOL_REF				0x82
-#define GET_TOOL_REF_LEN			2
-#define GET_TOOL_REF_RETURN_LEN		14
-
-#define SET_WORLD_REF				0x83
-#define SET_WORLD_REF_LEN			14
-
-#define GET_WORLD_REF				0x84
-#define GET_WORLD_REF_LEN			2
-#define GET_WORLD_REF_RETURN_LEN	14
-
-#define SET_REF_FRAME				0x85
-#define SET_REF_FRAME_LEN			3
-
-#define GET_REF_FRAME				0x86
-#define GET_REF_FRAME_LEN			2
-#define GET_REF_FRAME_RETURN_LEN	3
-
-#define SET_MOVEMENT_TYPE			0x87
-#define SET_MOVEMENT_TYPE_LEN		3
-
-#define GET_MOVEMENT_TYPE			0x88
-#define GET_MOVEMENT_TYPE_LEN		2
-#define GET_MOVEMNET_TYPE_RETURN_LEN	3
-
-#define SET_END_TYPE				0x89
-#define SET_END_TYPE_LEN			3
-
-#define GET_END_TYPE				0x8A
-#define GET_END_TYPE_LEN			2
-#define GET_END_TYPE_RETURN_LEN		3
-
-#define MOVEC_COORDS_DEFAULT		0x8B
-#define MOVEC_COORDS_DEFAULT_LEN	38
-
-#define MOVEC_COORDS				0x8C
-#define MOVEC_COORDS_LEN			26
-
 
 #endif // !COMMUNICATEDEFINE_H

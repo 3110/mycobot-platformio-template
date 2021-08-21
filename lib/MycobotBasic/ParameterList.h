@@ -2,14 +2,13 @@
 #define PARAMETERLIST_H
 
 #include <array>
-#include <map>
 
 namespace myCobotDefine {
 
 #define SYSTEM_VERSION		0x01
 
 #define MYCOBOT_500_VERSION			1
-// #define PI						3.14159265
+#define PI						3.14159265
 #define COEFFICIENT				(180.0 / PI)
 
 	// DH parameters
@@ -47,22 +46,18 @@ namespace myCobotDefine {
 	using Encoders = std::array<float, Joints>;
 
 	// servo speed
-	const float maximum_large_servo_speed = 1000;	//2000?
-	const float maximum_small_servo_speed = 1400; // 3000?
+	const float maximumLargeServoSpeed = 1000;	//2000?
+	const float maximumSmallServoSpeed = 1000; // 3000?
 
 	// isInPosition offset
-	const float is_in_position_offset = 5;
-	const float is_in_poseture_offset = 0.3;
-	const float is_in_angles_offset = 0.1;
+	const float isInPositionOffset = 5;
+	const float isInPosetureOffset = 0.3;
 
 	// reference frame type
-	enum RFType : int { ERROR_RF = -1, BASE = 0, WORLD };
+	enum RFType : int { BASE = 0, WORLD };
 
 	// compute flange pose or tool pose
-	enum EndType : int { ERROR_END = -1, FLANGE = 0, TOOL };
-
-	// movement type
-	enum MovementType : int { ERROR_MOVEMENT = -1, MOVEJ = 0, MOVEL };
+	enum EndType : int { FLANGE = 0, TOOL };
 
 	struct RobotPose
 	{
@@ -112,17 +107,4 @@ namespace myCobotDefine {
 	};
 
 }
-
-namespace roboticMessages {
-
-#define IK_NO_SOLUTION			0x20
-#define ITS_POWER_OFF			0x21
-
-
-	const std::pair<int, std::string> printList[] = { {IK_NO_SOLUTION, "inverse kinematics no solution"},
-														{ITS_POWER_OFF, "robotic is power off"} };
-
-
-}
-
 #endif // !PARAMETERLIST_H
