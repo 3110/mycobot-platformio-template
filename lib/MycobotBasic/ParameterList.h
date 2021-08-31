@@ -1,6 +1,8 @@
 #ifndef PARAMETERLIST_H
 #define PARAMETERLIST_H
 
+#include <Arduino.h>
+
 #include <array>
 
 namespace myCobotDefine {
@@ -8,7 +10,6 @@ namespace myCobotDefine {
 #define SYSTEM_VERSION 0x01
 
 #define MYCOBOT_500_VERSION 1
-#define PI 3.14159265
 #define COEFFICIENT (180.0 / PI)
 
 // DH parameters
@@ -37,7 +38,7 @@ const float cvt_encoder_to_rad = 2048 / PI;
 
 // robotic data struct
 enum Axis : int { X = 0, Y, Z, RX, RY, RZ };
-enum Joint : int { J1 = 0, J2, J3, J4, J5, J6 };
+enum Joint : int { J1 = 1, J2, J3, J4, J5, J6 };
 constexpr const int Axes = 6;
 constexpr const int Joints = 6;
 using Coords = std::array<float, Axes>;
@@ -69,6 +70,7 @@ struct RobotPose {
         for (int i = 0; i < 3; ++i) position[i] = rp.position[i];
         for (int i = 0; i < 3; ++i) poseture[i] = rp.poseture[i];
         for (int i = 0; i < 4; ++i) quaternion[i] = rp.quaternion[i];
+        return *this;
     }
 
     float position[3];
