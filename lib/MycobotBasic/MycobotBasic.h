@@ -17,7 +17,7 @@
 #define SEND_DATA_GAP 4
 #define WRITE_SERVO_GAP 20
 #define WRITE_TIME_GAP 20  // every 8 ms to play one data
-#define WRITE_SIGLE_SERVO_GAP 50
+#define WRITE_SINGLE_SERVO_GAP 50
 #define REC_TIME_DELAY 20  // every 20 ms to store one dat
 
 #define error_angle -1000
