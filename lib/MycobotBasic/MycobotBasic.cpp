@@ -246,23 +246,23 @@ void* MycobotBasic::readData() {
                     Angles* pAngles = new Angles;
                     float temp = 0.0;
                     temp = angle_1_low + angle_1_high * 256;
-                    pAngles->at(0) = (temp > 60000 ? (temp - 65536) : temp) /
-                                     1000 * COEFFICIENT;
+                    pAngles->at(0) =
+                        (temp > 60000 ? (temp - 65536) : temp) / 100;
                     temp = angle_2_low + angle_2_high * 256;
-                    pAngles->at(1) = (temp > 60000 ? (temp - 65536) : temp) /
-                                     1000 * COEFFICIENT;
+                    pAngles->at(1) =
+                        (temp > 60000 ? (temp - 65536) : temp) / 100;
                     temp = angle_3_low + angle_3_high * 256;
-                    pAngles->at(2) = (temp > 60000 ? (temp - 65536) : temp) /
-                                     1000 * COEFFICIENT;
+                    pAngles->at(2) =
+                        (temp > 60000 ? (temp - 65536) : temp) / 100;
                     temp = angle_4_low + angle_4_high * 256;
-                    pAngles->at(3) = (temp > 60000 ? (temp - 65536) : temp) /
-                                     1000 * COEFFICIENT;
+                    pAngles->at(3) =
+                        (temp > 60000 ? (temp - 65536) : temp) / 100;
                     temp = angle_5_low + angle_5_high * 256;
-                    pAngles->at(4) = (temp > 60000 ? (temp - 65536) : temp) /
-                                     1000 * COEFFICIENT;
+                    pAngles->at(4) =
+                        (temp > 60000 ? (temp - 65536) : temp) / 100;
                     temp = angle_6_low + angle_6_high * 256;
-                    pAngles->at(5) = (temp > 60000 ? (temp - 65536) : temp) /
-                                     1000 * COEFFICIENT;
+                    pAngles->at(5) =
+                        (temp > 60000 ? (temp - 65536) : temp) / 100;
 
                     return pAngles;
                 }
@@ -335,7 +335,9 @@ Angles MycobotBasic::GetAngles() {
             continue;
         else {
             pAngles = (Angles*)tempPtr;
-            for (int i = 0; i < 6; ++i) angles[i] = pAngles->at(i);
+            for (int i = 0; i < 6; ++i) {
+                angles[i] = pAngles->at(i);
+            }
             delete pAngles;
             return angles;
         }
@@ -344,10 +346,8 @@ Angles MycobotBasic::GetAngles() {
 }
 
 void MycobotBasic::WriteAngle(int joint, float value, int speed) {
-    byte joint_number = byte(joint - 1);
-    value = value / COEFFICIENT;
-    byte angle_low = lowByte(static_cast<int>(value * 1000));
-    byte angle_high = highByte(static_cast<int>(value * 1000));
+    byte angle_low = lowByte(static_cast<int>(value * 100));
+    byte angle_high = highByte(static_cast<int>(value * 100));
 
     byte sp = speed;
 
@@ -355,7 +355,7 @@ void MycobotBasic::WriteAngle(int joint, float value, int speed) {
     Serial2.write(header);
     Serial2.write(WRITE_ANGLE_LEN);
     Serial2.write(WRITE_ANGLE);
-    Serial2.write(joint_number);
+    Serial2.write(joint);
     Serial2.write(angle_high);
     Serial2.write(angle_low);
     Serial2.write(sp);
@@ -365,24 +365,23 @@ void MycobotBasic::WriteAngle(int joint, float value, int speed) {
 }
 
 void MycobotBasic::WriteAngles(Angles angles, int speed) {
-    for (auto& val : angles) val = val / COEFFICIENT;
-    byte angle_1_low = lowByte(static_cast<int>(angles[0] * 1000));
-    byte angle_1_high = highByte(static_cast<int>(angles[0] * 1000));
+    byte angle_1_low = lowByte(static_cast<int>(angles[0] * 100));
+    byte angle_1_high = highByte(static_cast<int>(angles[0] * 100));
 
-    byte angle_2_low = lowByte(static_cast<int>(angles[1] * 1000));
-    byte angle_2_high = highByte(static_cast<int>(angles[1] * 1000));
+    byte angle_2_low = lowByte(static_cast<int>(angles[1] * 100));
+    byte angle_2_high = highByte(static_cast<int>(angles[1] * 100));
 
-    byte angle_3_low = lowByte(static_cast<int>(angles[2] * 1000));
-    byte angle_3_high = highByte(static_cast<int>(angles[2] * 1000));
+    byte angle_3_low = lowByte(static_cast<int>(angles[2] * 100));
+    byte angle_3_high = highByte(static_cast<int>(angles[2] * 100));
 
-    byte angle_4_low = lowByte(static_cast<int>(angles[3] * 1000));
-    byte angle_4_high = highByte(static_cast<int>(angles[3] * 1000));
+    byte angle_4_low = lowByte(static_cast<int>(angles[3] * 100));
+    byte angle_4_high = highByte(static_cast<int>(angles[3] * 100));
 
-    byte angle_5_low = lowByte(static_cast<int>(angles[4] * 1000));
-    byte angle_5_high = highByte(static_cast<int>(angles[4] * 1000));
+    byte angle_5_low = lowByte(static_cast<int>(angles[4] * 100));
+    byte angle_5_high = highByte(static_cast<int>(angles[4] * 100));
 
-    byte angle_6_low = lowByte(static_cast<int>(angles[5] * 1000));
-    byte angle_6_high = highByte(static_cast<int>(angles[5] * 1000));
+    byte angle_6_low = lowByte(static_cast<int>(angles[5] * 100));
+    byte angle_6_high = highByte(static_cast<int>(angles[5] * 100));
 
     byte sp = speed;
 
@@ -602,7 +601,6 @@ bool MycobotBasic::CheckRunning() {
 }
 
 void MycobotBasic::JogAngle(int joint, int direction, int speed) {
-    byte joint_number = joint;
     byte di = direction;
     byte sp = speed;
 
@@ -610,7 +608,7 @@ void MycobotBasic::JogAngle(int joint, int direction, int speed) {
     Serial2.write(header);
     Serial2.write(JOG_ANGLE_LEN);
     Serial2.write(JOG_ANGLE);
-    Serial2.write(joint_number);
+    Serial2.write(joint);
     Serial2.write(di);
     Serial2.write(sp);
     Serial2.write(footer);
@@ -642,7 +640,6 @@ void MycobotBasic::JogStop() {
 }
 
 void MycobotBasic::SetEncoder(int joint, int encoder) {
-    byte joint_number = joint - 1;
     byte encoder_high = highByte(encoder);
     byte encoder_low = lowByte(encoder);
 
@@ -650,14 +647,13 @@ void MycobotBasic::SetEncoder(int joint, int encoder) {
     Serial2.write(header);
     Serial2.write(SET_ENCODER_LEN);
     Serial2.write(SET_ENCODER);
-    Serial2.write(joint_number);
+    Serial2.write(joint);
     Serial2.write(encoder_high);
     Serial2.write(encoder_low);
     Serial2.write(footer);
 }
 
 int MycobotBasic::GetEncoder(int joint) {
-    byte joint_number = joint - 1;
     Serial2.write(header);
     Serial2.write(header);
     Serial2.write(GET_ENCODER_LEN);
@@ -842,12 +838,11 @@ void MycobotBasic::SetAcceleration(float acceleration) {
 }
 
 float MycobotBasic::getJointMin(int joint) {
-    byte joint_number = joint - 1;
     Serial2.write(header);
     Serial2.write(header);
     Serial2.write(GET_JOINT_MIN_LEN);
     Serial2.write(GET_JOINT_MIN);
-    Serial2.write(joint_number);
+    Serial2.write(joint);
     Serial2.write(footer);
 
     unsigned long t_begin = millis();
@@ -872,12 +867,11 @@ float MycobotBasic::getJointMin(int joint) {
 }
 
 float MycobotBasic::getJointMax(int joint) {
-    byte joint_number = joint - 1;
     Serial2.write(header);
     Serial2.write(header);
     Serial2.write(GET_JOINT_MAX_LEN);
     Serial2.write(GET_JOINT_MAX);
-    Serial2.write(joint_number);
+    Serial2.write(joint);
     Serial2.write(footer);
 
     unsigned long t_begin = millis();
@@ -902,40 +896,37 @@ float MycobotBasic::getJointMax(int joint) {
 }
 
 void MycobotBasic::setJointMin(int joint, float angle) {
-    byte joint_number = joint - 1;
     byte angle_low = lowByte(static_cast<int>(angle * 10));
     byte angle_high = highByte(static_cast<int>(angle * 10));
     Serial2.write(header);
     Serial2.write(header);
     Serial2.write(SET_JOINT_MIN_LEN);
     Serial2.write(SET_JOINT_MIN);
-    Serial2.write(joint_number);
+    Serial2.write(joint);
     Serial2.write(angle_high);
     Serial2.write(angle_low);
     Serial2.write(footer);
 }
 
 void MycobotBasic::setJointMax(int joint, float angle) {
-    byte joint_number = joint - 1;
     byte angle_low = lowByte(static_cast<int>(angle * 10));
     byte angle_high = highByte(static_cast<int>(angle * 10));
     Serial2.write(header);
     Serial2.write(header);
     Serial2.write(SET_JOINT_MAX_LEN);
     Serial2.write(SET_JOINT_MAX);
-    Serial2.write(joint_number);
+    Serial2.write(joint);
     Serial2.write(angle_high);
     Serial2.write(angle_low);
     Serial2.write(footer);
 }
 
 bool MycobotBasic::isServoEnabled(int joint) {
-    byte joint_number = joint - 1;
     Serial2.write(header);
     Serial2.write(header);
     Serial2.write(IS_SERVO_ENABLED_LEN);
     Serial2.write(IS_SERVO_ENABLED);
-    Serial2.write(joint_number);
+    Serial2.write(joint);
     Serial2.write(footer);
 
     unsigned long t_begin = millis();
@@ -986,12 +977,11 @@ bool MycobotBasic::isAllServoEnabled() {
 }
 
 byte MycobotBasic::getServoData(int joint, byte data_id) {
-    byte joint_number = joint - 1;
     Serial2.write(header);
     Serial2.write(header);
     Serial2.write(GET_SERVO_DATA_LEN);
     Serial2.write(GET_SERVO_DATA);
-    Serial2.write(joint_number);
+    Serial2.write(joint);
     Serial2.write(data_id);
     Serial2.write(footer);
 
@@ -1017,12 +1007,11 @@ byte MycobotBasic::getServoData(int joint, byte data_id) {
 }
 
 void MycobotBasic::setServoCalibration(int joint) {
-    byte joint_number = joint - 1;
     Serial2.write(header);
     Serial2.write(header);
     Serial2.write(SET_SERVO_CALIBRATION_LEN);
     Serial2.write(SET_SERVO_CALIBRATION);
-    Serial2.write(joint_number);
+    Serial2.write(joint);
     Serial2.write(footer);
 }
 
